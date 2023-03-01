@@ -568,7 +568,7 @@ class Resolver:
             return fast_update(queryset, change, fields, None)
         count_updated = 0
         for elem in change: 
-            elem.save()
+            elem.save(update_fields=fields)
             count_updated += 1
         return count_updated
           
