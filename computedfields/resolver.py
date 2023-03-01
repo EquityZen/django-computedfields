@@ -566,8 +566,12 @@ class Resolver:
         # we can skip batch_size here, as it already was batched in bulk_updater
         if self.use_fastupdate:
             return fast_update(queryset, change, fields, None)
-        return queryset.model._base_manager.bulk_update(change, fields)
-
+        count_updated = 0
+        for elem in change: 
+            elem.save()
+            count_updated += 1
+        return count_updated
+          
     def _compute(self, instance: Model, model: Type[Model], fieldname: str) -> Any:
         """
         Returns the computed field value for ``fieldname``.
